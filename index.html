@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>podr.ai - AI Social Anxiety Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #FFE4E1, #FFB6C1);
+            color: #333;
+        }
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF69B4;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+        }
+        .cta-button {
+            background: #FF69B4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .support-types {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .type-btn {
+            background: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .type-btn.active {
+            background: #FF69B4;
+            color: white;
+        }
+        .coaches {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .coach-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .coach-info {
+            padding: 1.5rem;
+        }
+        .satisfaction {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .tag {
+            background: #FFE4E1;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">podr.ai</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <button class="cta-button">Start Chat</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Overcome Social Anxiety with AI Support</h1>
+        <p>24/7 empathetic conversations with AI psychologists and coaches trained in social anxiety management</p>
+        <button class="cta-button">Begin Your Journey</button>
+    </section>
+
+    <div class="support-types">
+        <button class="type-btn active">All Support</button>
+        <button class="type-btn">Social Situations</button>
+        <button class="type-btn">Public Speaking</button>
+        <button class="type-btn">Work Anxiety</button>
+        <button class="type-btn">Dating</button>
+    </div>
+
+    <div class="coaches">
+        <div class="coach-card">
+            <div class="coach-info">
+                <h3>Emma</h3>
+                <p>Social Situations Specialist</p>
+                <div class="tags">
+                    <span class="tag">Group Settings</span>
+                    <span class="tag">Social Confidence</span>
+                </div>
+                <p class="satisfaction">Satisfaction Score: 94.8%</p>
+                <button class="cta-button">Chat Now</button>
+            </div>
+        </div>
+
+        <div class="coach-card">
+            <div class="coach-info">
+                <h3>David</h3>
+                <p>Public Speaking Coach</p>
+                <div class="tags">
+                    <span class="tag">Presentation Skills</span>
+                    <span class="tag">Performance Anxiety</span>
+                </div>
+                <p class="satisfaction">Satisfaction Score: 96.2%</p>
+                <button class="cta-button">Chat Now</button>
+            </div>
+        </div>
+
+        <div class="coach-card">
+            <div class="coach-info">
+                <h3>Sophie</h3>
+                <p>Work Anxiety Specialist</p>
+                <div class="tags">
+                    <span class="tag">Workplace Communication</span>
+                    <span class="tag">Career Growth</span>
+                </div>
+                <p class="satisfaction">Satisfaction Score: 93.7%</p>
+                <button class="cta-button">Chat Now</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
