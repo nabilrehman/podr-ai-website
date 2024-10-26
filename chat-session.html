@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>podr.ai - Chat Session</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --gradient-start: #FFF1EE;
+            --gradient-end: #FFE0E9;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+            --accent-color: #FF4785;
+            --accent-hover: #FF6B98;
+            --white: #FFFFFF;
+            --shadow-color: rgba(255, 71, 133, 0.1);
+            --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
+            --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
+            --nav-blur: blur(10px);
+            --card-blur: blur(5px);
+            --chat-bg: #F8F9FA;
+            --message-bg: #FFFFFF;
+            --bot-message-bg: #FFF1EE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-dark);
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-nav {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: var(--nav-blur);
+            -webkit-backdrop-filter: var(--nav-blur);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            max-height: calc(100vh - 64px);
+        }
+
+        .chat-sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            border-right: 1px solid rgba(255, 71, 133, 0.1);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--button-gradient);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-button:hover {
+            opacity: 0.9;
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--chat-bg);
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(255, 71, 133, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-start);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-info h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ai-info p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: var(--bot-message-bg);
+            border: 1px solid rgba(255, 71, 133, 0.1);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--message-bg);
+            border: 1px solid rgba(255, 71, 133, 0.1);
+        }
+
+        .chat-input {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(255, 71, 133, 0.1);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 71, 133, 0.1);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            resize: none;
+            min-height: 45px;
+            max-height: 150px;
+        }
+
+        .send-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--button-gradient);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .send-button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="index.html" class="logo">podr.ai</a>
+    </nav>
+
+    <div class="chat-container">
+        <aside class="chat-sidebar">
+            <div class="chat-actions">
+                <button class="action-button">
+                    <i class="fas fa-video"></i>
+                    Video Call
+                </button>
+                <button class="action-button">
+                    <i class="fas fa-phone"></i>
+                    Voice Call
+                </button>
+            </div>
+        </aside>
+
+        <main class="chat-main">
+            <div class="chat-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-user" style="color: var(--accent-color)"></i>
+                </div>
+                <div class="ai-info">
+                    <h3>Dr. Emma AI</h3>
+                    <p>Social Situations Specialist</p>
+                </div>
+            </div>
+
+            <div class="chat-messages">
+                <div class="message bot">
+                    Hello! I'm Dr. Emma AI, your Social Situations Specialist. I'm here to help you overcome social anxiety and build lasting confidence. How are you feeling today?
+                </div>
+                <div class="message user">
+                    Hi Dr. Emma, I'm feeling a bit nervous about an upcoming social event.
+                </div>
+                <div class="message bot">
+                    I understand how challenging social events can be. Let's work together to develop some strategies that will help you feel more comfortable. Could you tell me more about the event and what specific aspects are making you feel nervous?
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <div class="input-container">
+                    <textarea class="message-input" placeholder="Type your message here..."></textarea>
+                    <button class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                        Send
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Handle textarea auto-resize
+        const textarea = document.querySelector('.message-input');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Handle send button click
+        const sendButton = document.querySelector('.send-button');
+        sendButton.addEventListener('click', function() {
+            const message = textarea.value.trim();
+            if (message) {
+                // Add user message
+                const chatMessages = document.querySelector('.chat-messages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = message;
+                chatMessages.appendChild(userMessage);
+
+                // Clear input
+                textarea.value = '';
+                textarea.style.height = 'auto';
+
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Simulate AI response (in a real application, this would be handled by your backend)
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot';
+                    botMessage.textContent = "I'm processing your message and will respond shortly...";
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // Handle enter key
+        textarea.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>

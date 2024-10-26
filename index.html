@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>podr.ai - AI-Powered Social Anxiety Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-start: #FFF1EE;
+            --gradient-end: #FFE0E9;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+            --accent-color: #FF4785;
+            --accent-hover: #FF6B98;
+            --white: #FFFFFF;
+            --shadow-color: rgba(255, 71, 133, 0.1);
+            --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
+            --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
+            --nav-blur: blur(10px);
+            --card-blur: blur(5px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .main-nav {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: var(--nav-blur);
+            -webkit-backdrop-filter: var(--nav-blur);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .cta-button {
+            background: var(--button-gradient);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 71, 133, 0.3);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-dark), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coaches {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .coach-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            backdrop-filter: var(--card-blur);
+            -webkit-backdrop-filter: var(--card-blur);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .coach-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(255, 71, 133, 0.2);
+        }
+
+        .coach-avatar {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .avatar-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .coach-info {
+            padding: 1.5rem;
+        }
+
+        .coach-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .specialty {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .coach-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .rating {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.9375rem;
+            color: var(--text-light);
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        .chat-button {
+            width: 100%;
+            background: var(--button-gradient);
+            color: var(--white);
+            border: none;
+            padding: 0.875rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: all 0.5s ease;
+        }
+
+        .chat-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 71, 133, 0.3);
+        }
+
+        .chat-button:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="#" class="logo">podr.ai</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <a href="chat-session.html" class="cta-button" style="display: inline-block; text-decoration: none;">Start Chat</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Overcome Social Anxiety with AI Support</h1>
+        <p>24/7 empathetic conversations with AI psychologists and coaches trained in social anxiety management</p>
+        <a href="chat-session.html" class="cta-button" style="display: inline-block; text-decoration: none;">Begin Your Journey</a>
+    </section>
+
+    <section class="coaches">
+        <div class="coach-card">
+            <div class="coach-avatar">
+                <img src="images/profiles/ai-coach-1.svg" alt="Dr. Emma AI" class="avatar-img">
+            </div>
+            <div class="coach-info">
+                <h3>Dr. Emma AI</h3>
+                <p class="specialty">Social Situations Specialist</p>
+                <div class="tags">
+                    <span class="tag">Group Settings</span>
+                    <span class="tag">Social Confidence</span>
+                </div>
+                <div class="coach-stats">
+                    <div class="rating">★ 4.9/5</div>
+                    <div class="satisfaction">98.8% Success Rate</div>
+                </div>
+                <p class="description">Specialized in helping with social anxiety in group settings and building lasting confidence.</p>
+                <a href="chat-session.html" class="chat-button" style="display: inline-block; text-decoration: none;">Start Session</a>
+            </div>
+        </div>
+
+        <div class="coach-card">
+            <div class="coach-avatar">
+                <img src="images/profiles/ai-coach-2.svg" alt="Dr. Alex AI" class="avatar-img">
+            </div>
+            <div class="coach-info">
+                <h3>Dr. Alex AI</h3>
+                <p class="specialty">Public Speaking Expert</p>
+                <div class="tags">
+                    <span class="tag">Presentation Skills</span>
+                    <span class="tag">Performance Anxiety</span>
+                </div>
+                <div class="coach-stats">
+                    <div class="rating">★ 4.8/5</div>
+                    <div class="satisfaction">97.2% Success Rate</div>
+                </div>
+                <p class="description">Expert in transforming public speaking anxiety into confident performance abilities.</p>
+                <a href="chat-session.html" class="chat-button" style="display: inline-block; text-decoration: none;">Start Session</a>
+            </div>
+        </div>
+
+        <div class="coach-card">
+            <div class="coach-avatar">
+                <img src="images/profiles/ai-coach-3.svg" alt="Dr. Sam AI" class="avatar-img">
+            </div>
+            <div class="coach-info">
+                <h3>Dr. Sam AI</h3>
+                <p class="specialty">Workplace Anxiety Specialist</p>
+                <div class="tags">
+                    <span class="tag">Career Growth</span>
+                    <span class="tag">Work-Life Balance</span>
+                </div>
+                <div class="coach-stats">
+                    <div class="rating">★ 4.9/5</div>
+                    <div class="satisfaction">98.4% Success Rate</div>
+                </div>
+                <p class="description">Helping professionals overcome workplace anxiety and achieve career goals with confidence.</p>
+                <a href="chat-session.html" class="chat-button" style="display: inline-block; text-decoration: none;">Start Session</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
