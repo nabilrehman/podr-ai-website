@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PODR AI - Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <style>
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .card-slider {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .gradient-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-white to-purple-50">
+    <main class="min-h-screen">
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">
+                        Our Expert AI Coaches
+                    </h2>
+                    <a href="/coaches" class="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1">
+                        See all coaches
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="relative">
+                    <div class="flex overflow-x-auto gap-6 py-4 px-2 card-slider" id="cardContainer">
+                        <!-- Card 1 -->
+                        <div class="card flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden min-w-[320px] max-w-[380px] relative group">
+                            <div class="relative aspect-[4/3] w-full bg-purple-50">
+                                <img src="/images/profiles/ai-coach-1.svg" alt="Dr. Emma AI" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                                <div class="absolute inset-0 gradient-overlay"></div>
+                                
+                                <div class="absolute bottom-3 right-3 bg-white/90 p-2 rounded-lg shadow-md backdrop-blur-sm">
+                                    <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                                        <path d="M14 4a2 2 0 012 2v8a2 2 0 01-2 2h-2V4h2z" />
+                                    </svg>
+                                </div>
+
+                                <div class="absolute top-3 right-3 bg-green-500/90 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                                    Available Today
+                                </div>
+                            </div>
+                            
+                            <div class="p-5 flex flex-col gap-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Emma AI</h3>
+                                    <p class="text-sm text-gray-600">Social Situations Specialist</p>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 text-sm rounded-full font-medium hover:bg-purple-100 transition-colors">
+                                        Group Settings
+                                    </span>
+                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 text-sm rounded-full font-medium hover:bg-purple-100 transition-colors">
+                                        Social Confidence
+                                    </span>
+                                </div>
+                                
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <span class="font-semibold text-gray-900">4.9</span>
+                                    </div>
+                                    <div class="text-gray-600 flex items-center">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-gray-300 mr-2"></span>
+                                        98.8% Success Rate
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 text-sm line-clamp-2 leading-relaxed">
+                                    Specialized in helping with social anxiety in group settings and building lasting confidence.
+                                </p>
+                                
+                                <a href="/chat" class="mt-2 block w-full bg-purple-600 text-white py-3 px-4 rounded-xl hover:bg-purple-700 transition-colors duration-200 text-center font-medium shadow-sm hover:shadow-md active:scale-[0.98] transform">
+                                    Start Session
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- More cards here... -->
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-2 shadow-lg hover:bg-white transition-all border border-gray-100 z-10 hover:scale-110 duration-200">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-2 shadow-lg hover:bg-white transition-all border border-gray-100 z-10 hover:scale-110 duration-200">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <!-- Gradient Shadows -->
+                    <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none z-[1]"></div>
+                    <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none z-[1]"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple slider functionality
+        const container = document.getElementById('cardContainer');
+        const scrollAmount = 400;
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const direction = button.classList.contains('left') ? -1 : 1;
+                container.scrollBy({
+                    left: direction * scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
