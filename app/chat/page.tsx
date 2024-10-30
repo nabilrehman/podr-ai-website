@@ -10,6 +10,7 @@ interface Message {
   role: 'user' | 'assistant'
   timestamp: Date
   status?: 'sending' | 'sent' | 'error'
+  isStreaming?: boolean
 }
 
 const WELCOME_MESSAGE: Message = {
@@ -54,7 +55,15 @@ export default function ChatPage() {
       status: 'sending'
     }
 
-    setMessages(prev => [...prev, userMessage])
+    const assistantMessage: Message = {
+      id: (Date.now() + 1).toString(),
+      content: '',
+      role: 'assistant',
+      timestamp: new Date(),
+      isStreaming: true
+    }
+
+    setMessages(prev => [...prev, userMessage, assistantMessage])
     setInputMessage('')
     setIsLoading(true)
     setIsTyping(true)
@@ -69,27 +78,41 @@ export default function ChatPage() {
       })
 
       if (!response.ok) throw new Error('Failed to get response')
-
-      const data = await response.json()
       
       // Update user message status to sent
       setMessages(prev => prev.map(msg => 
         msg.id === userMessage.id ? { ...msg, status: 'sent' as const } : msg
       ))
 
-      // Add small delay to simulate natural conversation flow
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      const assistantMessage: Message = {
-        id: Date.now().toString(),
-        content: data.message,
-        role: 'assistant',
-        timestamp: new Date()
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+
+      if (!reader) throw new Error('No reader available')
+
+      while (true) {
+        const { value, done } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value, { stream: true })
+        
+        // Update the assistant message with the new chunk
+        setMessages(prev => prev.map(msg =>
+          msg.id === assistantMessage.id
+            ? { ...msg, content: msg.content + chunk }
+            : msg
+        ))
       }
 
-      setMessages(prev => [...prev, assistantMessage])
+      // Mark streaming as complete
+      setMessages(prev => prev.map(msg =>
+        msg.id === assistantMessage.id
+          ? { ...msg, isStreaming: false }
+          : msg
+      ))
+
     } catch (error) {
       console.error('Error:', error)
+      setMessages(prev => prev.filter(msg => msg.id !== assistantMessage.id))
       setMessages(prev => prev.map(msg => 
         msg.id === userMessage.id ? { ...msg, status: 'error' as const } : msg
       ))
@@ -99,8 +122,19 @@ export default function ChatPage() {
     }
   }
 
+  const TypingCursor = () => (
+    <motion.span
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ repeat: Infinity, duration: 0.8, ease: "easeInOut" }}
+      className="inline-block w-0.5 h-4 bg-current ml-0.5 -mb-0.5"
+    />
+  );
+
   const MessageBubble = ({ message }: { message: Message }) => {
     const isUser = message.role === 'user'
+    const showCursor = !isUser && message.isStreaming
     
     return (
       <motion.div
@@ -124,6 +158,7 @@ export default function ChatPage() {
             } p-3 rounded-b-2xl shadow-sm`}
           >
             {message.content}
+            {showCursor && <TypingCursor />}
           </div>
           <div className={`message-meta flex items-center gap-1 mt-1 text-xs text-gray-500 ${isUser ? 'justify-end' : 'justify-start'}`}>
             <span>{formatTimestamp(message.timestamp)}</span>
