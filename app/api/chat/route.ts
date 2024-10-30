@@ -27,14 +27,14 @@ let chat = model.startChat({
   history: [
     {
       role: 'user',
-      parts: INITIAL_CONTEXT,
+      parts: [{text: INITIAL_CONTEXT}]  // Change: Each part needs to be an object with a text property
     },
     {
       role: 'model',
-      parts: "I understand my role as Dr. Emma AI, and I'm ready to help users with their social anxiety and confidence building journey.",
+      parts: [{text: "I understand my role as Dr. Emma AI, and I'm ready to help users with their social anxiety and confidence building journey."}]  // Change: Same here
     },
   ],
-  generationConfig: {
+generationConfig: {
     maxOutputTokens: 1000,
     temperature: 0.7,
   },
