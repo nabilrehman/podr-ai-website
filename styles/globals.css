@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gradient-start: #FFF1EE;
+  --gradient-end: #FFE0E9;
+  --text-dark: #2D3436;
+  --text-light: #636E72;
+  --accent-color: #FF4785;
+  --accent-hover: #FF6B98;
+  --white: #FFFFFF;
+  --shadow-color: rgba(255, 71, 133, 0.1);
+  --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
+  --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
+  --nav-blur: blur(10px);
+  --card-blur: blur(5px);
+}
+
+@layer base {
+  body {
+    @apply min-h-screen;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: var(--text-dark);
+  }
+}
+
+@layer components {
+  .cta-button {
+    @apply inline-block px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 ease-in-out;
+    background: var(--button-gradient);
+  }
+
+  .cta-button:hover {
+    @apply transform -translate-y-0.5 shadow-lg;
+    box-shadow: 0 4px 8px rgba(255, 71, 133, 0.3);
+  }
+}
