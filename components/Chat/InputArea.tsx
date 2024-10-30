@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PaperAirplaneIcon, MicrophoneIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import VoiceFeatureModal from './VoiceFeatureModal';
-import VoiceCallModal from './VoiceCallModal';
+import { VoiceChatManager, VoiceChatState } from './Voice/VoiceChatManager';
 import ElevenLabsService from '@/services/ElevenLabsService';
 
 interface InputAreaProps {
@@ -17,17 +17,19 @@ interface InputAreaProps {
 const InputArea = ({ onSendMessage, isProcessing, profileImage, name }: InputAreaProps) => {
   const [message, setMessage] = useState('');
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
-  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [isVoiceChatOpen, setIsVoiceChatOpen] = useState(false);
+  const [voiceChatState, setVoiceChatState] = useState<VoiceChatState>(VoiceChatState.DISCONNECTED);
   const [isRecording, setIsRecording] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const elevenlabsService = useRef<ElevenLabsService | null>(null);
+  const sessionIdRef = useRef<string>(Date.now().toString());
 
   useEffect(() => {
     // Initialize ElevenLabs service
     // Note: In production, use environment variables
     elevenlabsService.current = new ElevenLabsService(
-      'your-api-key',
-      'default-voice-id'
+      process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY || 'your-api-key',
+      process.env.NEXT_PUBLIC_ELEVENLABS_VOICE_ID || 'default-voice-id'
     );
   }, []);
 
@@ -57,16 +59,18 @@ const InputArea = ({ onSendMessage, isProcessing, profileImage, name }: InputAre
     }
   };
 
-  const startVoiceCall = async () => {
-    setIsCallModalOpen(true);
-    try {
-      await elevenlabsService.current?.startVoiceCall((audioData) => {
-        ElevenLabsService.playAudio(audioData);
-      });
-    } catch (error) {
-      console.error('Failed to start voice call:', error);
-      setIsCallModalOpen(false);
-    }
+  const handleVoiceCall = () => {
+    setIsVoiceChatOpen(true);
+  };
+
+  const handleVoiceChatClose = () => {
+    setIsVoiceChatOpen(false);
+  };
+
+  const handleVoiceStateChange = (state: VoiceChatState) => {
+    setVoiceChatState(state);
+    // You can add additional handling here, like showing notifications
+    // or updating UI elements based on the voice chat state
   };
 
   return (
@@ -97,8 +101,12 @@ const InputArea = ({ onSendMessage, isProcessing, profileImage, name }: InputAre
               
               <motion.button
                 type="button"
-                onClick={startVoiceCall}
-                className="p-2 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors"
+                onClick={handleVoiceCall}
+                className={`p-2 rounded-lg transition-colors ${
+                  isVoiceChatOpen
+                    ? 'text-green-500 bg-green-50'
+                    : 'text-orange-500 hover:bg-orange-50'
+                }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -129,11 +137,11 @@ const InputArea = ({ onSendMessage, isProcessing, profileImage, name }: InputAre
         }}
       />
 
-      <VoiceCallModal
-        isOpen={isCallModalOpen}
-        onClose={() => setIsCallModalOpen(false)}
-        profileImage={profileImage}
-        name={name}
+      <VoiceChatManager
+        isOpen={isVoiceChatOpen}
+        onClose={handleVoiceChatClose}
+        sessionId={sessionIdRef.current}
+        onVoiceStateChange={handleVoiceStateChange}
       />
     </>
   );
