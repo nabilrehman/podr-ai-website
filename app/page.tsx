@@ -34,26 +34,22 @@ const coaches = [
 export default function Home() {
   return (
     <main>
-      <section className="text-center py-24 px-8">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[--text-dark] to-[--accent-color] inline-block text-transparent bg-clip-text leading-tight">
+      <section className="hero">
+          <h1>
             Overcome Social Anxiety with AI Support
           </h1>
-          <p className="text-xl text-[--text-light] mb-10 max-w-2xl mx-auto">
+          <p>
             24/7 empathetic conversations with AI psychologists and coaches trained in social anxiety management
           </p>
           <Link href="/chat" className="cta-button">
             Begin Your Journey
           </Link>
-        </div>
       </section>
 
-      <section className="px-8 py-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {coaches.map((coach) => (
-            <CoachCard key={coach.name} {...coach} />
-          ))}
-        </div>
+      <section className="coaches-grid">
+        {coaches.map((coach) => (
+          <CoachCard key={coach.name} {...coach} />
+        ))}
       </section>
     </main>
   )

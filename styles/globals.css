@@ -3,36 +3,163 @@
 @tailwind utilities;
 
 :root {
-  --gradient-start: #FFF1EE;
-  --gradient-end: #FFE0E9;
-  --text-dark: #2D3436;
-  --text-light: #636E72;
-  --accent-color: #FF4785;
-  --accent-hover: #FF6B98;
-  --white: #FFFFFF;
-  --shadow-color: rgba(255, 71, 133, 0.1);
-  --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
-  --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
-  --nav-blur: blur(10px);
-  --card-blur: blur(5px);
+    --gradient-start: #FFF1EE;
+    --gradient-end: #FFE0E9;
+    --text-dark: #2D3436;
+    --text-light: #636E72;
+    --accent-color: #FF4785;
+    --accent-hover: #FF6B98;
+    --white: #FFFFFF;
+    --shadow-color: rgba(255, 71, 133, 0.1);
+    --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
+    --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
+    --nav-blur: blur(10px);
+    --card-blur: blur(5px);
 }
 
 @layer base {
-  body {
-    @apply min-h-screen;
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    color: var(--text-dark);
-  }
+    * {
+        @apply m-0 p-0 box-border;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+        @apply min-h-screen leading-normal;
+        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+        color: var(--text-dark);
+    }
+
+    a {
+        @apply no-underline transition-colors duration-200;
+        color: inherit;
+    }
 }
 
 @layer components {
-  .cta-button {
-    @apply inline-block px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 ease-in-out;
-    background: var(--button-gradient);
-  }
+    .main-nav {
+        @apply sticky top-0 z-50 px-10 py-5 flex justify-between items-center border-b border-white/30;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: var(--nav-blur);
+        -webkit-backdrop-filter: var(--nav-blur);
+        box-shadow: 0 4px 6px rgba(255, 71, 133, 0.05);
+    }
 
-  .cta-button:hover {
-    @apply transform -translate-y-0.5 shadow-lg;
-    box-shadow: 0 4px 8px rgba(255, 71, 133, 0.3);
-  }
+    .logo {
+        @apply text-2xl font-bold flex items-center gap-2 no-underline;
+        color: var(--accent-color);
+    }
+
+    .nav-links {
+        @apply flex gap-10 items-center text-[0.9375rem] font-medium;
+    }
+
+    .nav-links a:not(.cta-button) {
+        @apply transition-colors duration-200;
+        color: var(--text-dark);
+    }
+
+    .nav-links a:hover:not(.cta-button) {
+        color: var(--accent-color);
+    }
+
+    .cta-button {
+        @apply inline-block px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden;
+        background: var(--button-gradient);
+    }
+
+    .cta-button::before {
+        content: '';
+        @apply absolute top-0 -left-full w-full h-full transition-all duration-500;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .cta-button:hover {
+        @apply transform -translate-y-0.5;
+        box-shadow: 0 4px 8px rgba(255, 71, 133, 0.3);
+    }
+
+    .cta-button:hover::before {
+        @apply left-full;
+    }
+
+    .hero {
+        @apply text-center py-24 px-8 max-w-4xl mx-auto relative;
+    }
+
+    .hero::before {
+        content: "";
+        @apply absolute top-1/2 left-1/2 w-screen h-full -translate-x-1/2 -translate-y-1/2 -z-10;
+        background: radial-gradient(circle at center, rgba(255, 71, 133, 0.15) 0%, transparent 70%);
+    }
+
+    .hero h1 {
+        @apply text-5xl mb-6 font-bold leading-tight;
+        background: linear-gradient(135deg, var(--text-dark), var(--accent-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+        @apply text-xl text-[var(--text-light)] mb-10 max-w-2xl mx-auto leading-relaxed;
+    }
+
+    .coaches-grid {
+        @apply grid gap-8 p-8 max-w-7xl mx-auto;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .coach-card {
+        @apply rounded-2xl overflow-hidden transition-all duration-300 border border-white/30;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: var(--card-blur);
+        -webkit-backdrop-filter: var(--card-blur);
+        box-shadow: var(--card-shadow);
+    }
+
+    .coach-card:hover {
+        @apply transform -translate-y-1;
+        box-shadow: 0 8px 16px rgba(255, 71, 133, 0.2);
+    }
+
+    .coach-avatar {
+        @apply w-full h-[200px] flex items-center justify-center p-8;
+        background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    }
+
+    .avatar-img {
+        @apply w-[120px] h-[120px] object-contain;
+    }
+
+    .coach-info {
+        @apply p-6;
+    }
+
+    .coach-info h3 {
+        @apply text-xl font-semibold mb-2 text-[var(--text-dark)];
+    }
+
+    .specialty {
+        @apply text-[0.9375rem] text-[var(--text-light)] mb-4;
+    }
+
+    .tags {
+        @apply flex flex-wrap gap-2 my-4;
+    }
+
+    .tag {
+        @apply px-4 py-2 rounded-full text-sm font-medium text-[var(--text-dark)];
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    }
+
+    .coach-stats {
+        @apply flex justify-between my-4 text-sm text-[var(--text-light)];
+    }
+
+    .rating {
+        @apply text-[var(--accent-color)] font-semibold;
+    }
+
+    .description {
+        @apply text-[0.9375rem] text-[var(--text-light)] my-4 leading-relaxed;
+    }
 }
