@@ -1,73 +1,153 @@
 /* Chat Page Specific Styles */
-.communication-controls {
-    @apply fixed top-[100px] right-[30px] flex flex-col gap-4 z-[1000];
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.control-button {
-    @apply w-14 h-14 border-none rounded-full bg-white text-[--primary-color] shadow-lg cursor-pointer flex items-center justify-center transition-[--transition] text-xl relative hover:scale-105 hover:bg-[--primary-color] hover:text-white;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.control-button.active {
-    @apply bg-[--primary-color] text-white;
+.chat-container {
+  @apply min-h-screen bg-gray-50;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.voice-indicator {
-    @apply absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-[--text-light] whitespace-nowrap;
+.message-container {
+  animation: slideIn 0.3s ease-out;
 }
 
-.call-button {
-    @apply fixed top-[90px] right-5 w-14 h-14 border-none rounded-full bg-[--primary-color] text-white cursor-pointer flex items-center justify-center transition-all text-xl shadow-[0_4px_12px_rgba(255,71,133,0.25)] z-[1000] hover:scale-105 hover:bg-[--accent-hover] hover:shadow-[0_6px_16px_rgba(255,71,133,0.3)];
+.message {
+  @apply break-words;
+  transition: all 0.2s ease-in-out;
 }
 
-.voice-button {
-    @apply w-[42px] h-[42px] border-2 border-[--primary-color] rounded-full bg-white text-[--primary-color] cursor-pointer flex items-center justify-center transition-[--transition] text-lg ml-2 relative hover:bg-[--primary-color] hover:text-white;
+.message:hover {
+  @apply shadow-md;
+  transform: translateY(-1px);
 }
 
-.voice-button.recording {
-    @apply bg-[--primary-color] text-white animate-pulse;
+.typing-indicator {
+  @apply p-3 inline-flex items-center gap-1 bg-gray-100 rounded-2xl shadow-sm ml-10;
 }
 
-.voice-wave {
-    @apply absolute -bottom-5 left-1/2 -translate-x-1/2 hidden items-center gap-[3px];
+.typing-dot {
+  @apply w-2 h-2 rounded-full bg-gray-400;
 }
 
-.voice-button.recording .voice-wave {
-    @apply flex;
+.typing-dot:nth-child(1) {
+  animation: bounce 0.6s infinite;
 }
 
-.wave-bar {
-    @apply w-[3px] h-[15px] bg-[--primary-color] rounded-[3px] animate-wave;
+.typing-dot:nth-child(2) {
+  animation: bounce 0.6s infinite 0.2s;
 }
 
-.wave-bar:nth-child(2) {
-    animation-delay: 0.1s;
+.typing-dot:nth-child(3) {
+  animation: bounce 0.6s infinite 0.4s;
 }
 
-.wave-bar:nth-child(3) {
-    animation-delay: 0.2s;
+.message-input {
+  @apply w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-pink-500 resize-none transition-all;
+  min-height: 44px;
+  max-height: 120px;
 }
 
-.wave-bar:nth-child(4) {
-    animation-delay: 0.3s;
+.message-input:focus {
+  @apply shadow-sm;
 }
 
-@keyframes wave {
-    0%, 100% {
-        height: 20%;
-    }
-    50% {
-        height: 100%;
-    }
+.send-button {
+  @apply p-2 rounded-xl text-white transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+.send-button:not(:disabled):hover {
+  @apply transform scale-105;
+}
+
+.message-timestamp {
+  @apply text-xs text-gray-400 mt-1;
+}
+
+.message-status {
+  @apply ml-1 text-xs;
+}
+
+.avatar-container {
+  @apply flex-shrink-0;
+}
+
+.avatar {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium;
+  transition: transform 0.2s ease-in-out;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
+}
+
+/* Header Styles */
+.chat-header {
+  @apply bg-white border-b border-gray-200 p-4 flex items-center fixed top-0 w-full z-50;
+  backdrop-filter: blur(8px);
+}
+
+/* Footer Styles */
+.chat-footer {
+  @apply fixed bottom-0 w-full bg-white border-t border-gray-200 p-4;
+  backdrop-filter: blur(8px);
+}
+
+/* Scrollbar Styles */
+.chat-messages::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.error-message {
+  animation: shake 0.5s ease-in-out;
 }
