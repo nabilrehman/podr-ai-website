@@ -45,7 +45,7 @@ const CoachCard = ({
         
         {/* Video icon overlay */}
         <div className="absolute bottom-3 right-3 bg-white/90 p-2 rounded-lg shadow-md backdrop-blur-sm">
-          <VideoCameraIcon className="w-5 h-5 text-purple-600" />
+          <VideoCameraIcon className="w-5 h-5 text-orange-600" />
         </div>
 
         {/* Availability Badge */}
@@ -66,7 +66,7 @@ const CoachCard = ({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 bg-purple-50 text-purple-700 text-sm rounded-full font-medium hover:bg-purple-100 transition-colors"
+              className="px-3 py-1 bg-orange-50 text-orange-700 text-sm rounded-full font-medium hover:bg-orange-100 transition-colors"
             >
               {tag}
             </span>
@@ -93,7 +93,7 @@ const CoachCard = ({
         {/* Action Button */}
         <Link 
           href="/chat" 
-          className="mt-2 block w-full bg-purple-600 text-white py-3 px-4 rounded-xl hover:bg-purple-700 transition-colors duration-200 text-center font-medium shadow-sm hover:shadow-md active:scale-[0.98] transform"
+          className="mt-2 block w-full bg-orange-600 text-white py-3 px-4 rounded-xl hover:bg-orange-700 transition-colors duration-200 text-center font-medium shadow-sm hover:shadow-md active:scale-[0.98] transform"
         >
           Start Session
         </Link>
