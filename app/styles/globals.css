@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --gradient-start: #FFF1EE;
+    --gradient-end: #FFE0E9;
+    --text-dark: #2D3436;
+    --text-light: #636E72;
+    --accent-color: #FF4785;
+    --accent-hover: #FF6B98;
+    --white: #FFFFFF;
+    --shadow-color: rgba(255, 71, 133, 0.1);
+    --card-shadow: 0 4px 12px rgba(255, 71, 133, 0.15);
+    --button-gradient: linear-gradient(135deg, #FF4785 0%, #FF7979 100%);
+    --nav-blur: blur(10px);
+    --card-blur: blur(5px);
+    --chat-bg: #F8F9FA;
+    --message-bg: #FFFFFF;
+    --bot-message-bg: #FFF1EE;
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+    --success-color: #00B894;
+    --warning-color: #FDCB6E;
+    --error-color: #FF7675;
+}
+
+@layer base {
+    body {
+        @apply min-h-screen bg-gradient-to-br from-[--gradient-start] to-[--gradient-end] text-[--text-dark] leading-relaxed font-sans;
+    }
+}
+
+@layer components {
+    .main-nav {
+        @apply sticky top-0 z-50 bg-white/85 backdrop-blur-[--nav-blur] border-b border-white/30 px-10 py-5;
+    }
+
+    .logo {
+        @apply text-[--accent-color] text-2xl font-bold no-underline flex items-center gap-2;
+    }
+
+    .nav-links {
+        @apply flex gap-10 items-center;
+    }
+
+    .nav-links a {
+        @apply text-[--text-dark] no-underline font-medium text-[0.9375rem] transition-colors hover:text-[--accent-color];
+    }
+
+    .cta-button {
+        @apply bg-gradient-to-r from-[--accent-color] to-[#FF7979] text-white px-6 py-2 rounded-xl cursor-pointer font-semibold text-[0.9375rem] transition-all hover:opacity-90 shadow-md hover:shadow-lg;
+    }
+
+    .hero {
+        @apply text-center py-24 px-8 max-w-4xl mx-auto relative;
+    }
+
+    .hero::before {
+        content: "";
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-full bg-radial-gradient -z-10;
+    }
+
+    .hero h1 {
+        @apply text-5xl mb-6 font-bold bg-gradient-to-r from-[--text-dark] to-[--accent-color] bg-clip-text text-transparent leading-tight;
+    }
+
+    .hero p {
+        @apply text-xl text-[--text-light] mb-10 max-w-2xl mx-auto leading-relaxed;
+    }
+
+    /* Chat Styles */
+    .chat-container {
+        @apply flex flex-col flex-1 max-h-[calc(100vh-64px)] bg-gradient-to-br from-white to-[--chat-bg];
+    }
+
+    .chat-header {
+        @apply p-4 bg-white/95 border-b border-[--shadow-color] flex items-center justify-between;
+    }
+
+    .ai-avatar {
+        @apply w-10 h-10 rounded-full bg-[--gradient-start] flex items-center justify-center;
+    }
+
+    .ai-info h3 {
+        @apply text-base mb-1;
+    }
+
+    .ai-info p {
+        @apply text-sm text-[--text-light];
+    }
+
+    .chat-messages {
+        @apply flex-1 p-4 overflow-y-auto flex flex-col gap-4;
+    }
+
+    .message {
+        @apply max-w-[80%] p-4 rounded-2xl leading-relaxed relative animate-messageAppear my-2;
+    }
+
+    .message.bot {
+        @apply self-start bg-[--bot-message-bg] border border-[--shadow-color] rounded-bl-sm mr-8;
+    }
+
+    .message.user {
+        @apply self-end bg-[--accent-color] text-white rounded-br-sm ml-8;
+    }
+
+    .chat-input {
+        @apply p-5 bg-white border-t border-[--shadow-color] shadow-lg shadow-black/5 relative;
+    }
+
+    .input-container {
+        @apply flex gap-3 items-center bg-[--chat-bg] rounded-3xl p-3 shadow-inner transition-all focus-within:shadow-[--accent-color]/20;
+    }
+
+    .message-input {
+        @apply flex-1 p-3 border-none bg-transparent text-base resize-none min-h-[45px] max-h-[150px] focus:outline-none;
+    }
+
+    .send-button {
+        @apply w-[42px] h-[42px] rounded-full bg-[--accent-color] text-white border-none cursor-pointer flex items-center justify-center transition-all text-lg ml-2 hover:scale-105 hover:bg-[--accent-hover];
+    }
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@layer utilities {
+    .bg-radial-gradient {
+        background: radial-gradient(circle at center, rgba(255, 71, 133, 0.1) 0%, transparent 70%);
+    }
+}

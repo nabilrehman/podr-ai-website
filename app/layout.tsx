@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import './styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '@/components/Navigation/Header'
@@ -20,6 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+      </head>
       <body>
         <Header />
         {children}

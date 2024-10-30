@@ -61,55 +61,65 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-80px)] flex flex-col p-4">
-      <div className="flex-1 overflow-y-auto mb-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.role === 'user' ? 'justify-end' : 'justify-start'
-            }`}
-          >
+    <div className="chat-container">
+      <main className="chat-main">
+        <div className="chat-header">
+          <div className="header-left">
+            <div className="ai-avatar">
+              <i className="fas fa-user" style={{ color: 'var(--accent-color)' }}></i>
+            </div>
+            <div className="ai-info">
+              <h3>Dr. Emma AI</h3>
+              <p>Social Situations Specialist</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="chat-messages">
+          {messages.map((message) => (
             <div
-              className={`max-w-[80%] p-4 rounded-2xl ${
-                message.role === 'user'
-                  ? 'bg-[--accent-color] text-white'
-                  : 'bg-white/95 border border-white/30'
-              }`}
+              key={message.id}
+              className={`message ${message.role === 'user' ? 'user' : 'bot'}`}
             >
               {message.content}
             </div>
-          </div>
-        ))}
-        {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-white/95 p-4 rounded-2xl border border-white/30">
+          ))}
+          {isLoading && (
+            <div className="message bot">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-.3s]" />
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-.5s]" />
+                <div className="w-2 h-2 bg-[--accent-color] rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-[--accent-color] rounded-full animate-bounce [animation-delay:-.3s]" />
+                <div className="w-2 h-2 bg-[--accent-color] rounded-full animate-bounce [animation-delay:-.5s]" />
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      <form onSubmit={handleSendMessage} className="flex gap-4">
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="flex-1 p-4 rounded-xl border border-white/30 bg-white/95 focus:outline-none focus:ring-2 focus:ring-[--accent-color]"
-        />
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="cta-button disabled:opacity-50"
-        >
-          Send
-        </button>
-      </form>
+        <div className="chat-input">
+          <form onSubmit={handleSendMessage} className="input-container">
+            <textarea
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Type your message here..."
+              className="message-input"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage(e);
+                }
+              }}
+            />
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="send-button"
+              title="Send message"
+            >
+              <i className="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </main>
     </div>
   )
 }
