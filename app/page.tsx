@@ -11,7 +11,7 @@ const coaches = [
     rating: '5.0',
     satisfaction: '99.9% Success Rate',
     description: 'Pioneering the intersection of AI and mental health support, helping individuals unlock their full potential.',
-    imagePath: 'https://avatars.githubusercontent.com/u/127373919?v=4'
+    imagePath: '/images/julien.jpg'
   },
   {
     name: 'Dr. Alex AI',
