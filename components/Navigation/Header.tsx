@@ -20,6 +20,9 @@ const Header = () => {
         <Link href="/chat" className="cta-button">
           Start Chat
         </Link>
+        <Link href="/voice-chat" className="cta-button ml-2">
+          Voice Chat
+        </Link>
       </div>
     </nav>
   );
