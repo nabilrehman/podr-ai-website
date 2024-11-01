@@ -32,7 +32,7 @@ export default function RotatingTagline() {
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={index}
-                                className="relative inline-block"
+                                className="relative inline-flex items-center px-6 py-2"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -41,17 +41,10 @@ export default function RotatingTagline() {
                                     ease: "easeOut"
                                 }}
                             >
-                                <span className="relative z-10 text-gray-800 font-semibold">
+                                <div className="absolute inset-0 bg-blue-100/60 rounded-[24px]" />
+                                <span className="relative text-gray-800 font-semibold">
                                     {phrases[index]}
                                 </span>
-                                <div
-                                    className="absolute inset-0 -mx-3 -my-1 bg-blue-100/60 rounded-full"
-                                    style={{
-                                        padding: '0.25rem 1rem',
-                                        transform: 'scale(1.1)',
-                                        zIndex: 0
-                                    }}
-                                />
                             </motion.div>
                         </AnimatePresence>
                     </div>
