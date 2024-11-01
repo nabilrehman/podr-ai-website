@@ -9,7 +9,10 @@ const nextConfig = {
         dns: false,
         tls: false,
         fs: false,
-        requests: false,
+        dgram: false,
+        'utf-8-validate': false,
+        'bufferutil': false,
+        'supports-color': false,
       };
     }
     return config;
