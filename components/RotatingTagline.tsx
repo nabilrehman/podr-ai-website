@@ -27,47 +27,37 @@ export default function RotatingTagline() {
             <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 opacity-50" />
             <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-semibold text-center leading-tight">
                 <div className="inline-flex items-center justify-center whitespace-nowrap">
-                    <span className="text-gray-900">Free yourself from your</span>
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={index}
-                            className="relative ml-3 inline-block bg-white/50 backdrop-blur-sm rounded-lg px-4 py-1.5"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{
-                                duration: 0.2,
-                                ease: "easeOut"
-                            }}
-                        >
-                            <span
-                                className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-400 font-bold"
-                                style={{
-                                    WebkitBackgroundClip: 'text'
+                    <span className="text-gray-900 static">Free yourself from your</span>
+                    <div className="relative ml-3 inline-block">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={index}
+                                className="relative inline-block"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{
+                                    duration: 0.15,
+                                    ease: "easeOut"
                                 }}
                             >
-                                {phrases[index]}
-                            </span>
-                        </motion.div>
-                    </AnimatePresence>
+                                <span className="relative z-10 text-gray-800 font-semibold">
+                                    {phrases[index]}
+                                </span>
+                                <div
+                                    className="absolute inset-0 -mx-3 -my-1 bg-blue-100/60 rounded-full"
+                                    style={{
+                                        padding: '0.25rem 1rem',
+                                        transform: 'scale(1.1)',
+                                        zIndex: 0
+                                    }}
+                                />
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </h1>
-            <style jsx global>{`
-                @keyframes shine {
-                    0% {
-                        background-position: 0% center;
-                        filter: brightness(1);
-                    }
-                    50% {
-                        background-position: 100% center;
-                        filter: brightness(1.2);
-                    }
-                    100% {
-                        background-position: 200% center;
-                        filter: brightness(1);
-                    }
-                }
-            `}</style>
+
         </div>
     );
 }
