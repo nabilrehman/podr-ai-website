@@ -17,9 +17,27 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscriptionUpdate }) 
 
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io('http://localhost:3000', {
-      path: '/api/socketio'
-    });
+    const initSocket = async () => {
+      // Initialize socket server
+      await fetch('/api/socketio');
+      
+      // Connect to socket
+      const socket = io({
+        path: '/api/socketio',
+      });
+
+      socket.on('connect', () => {
+        console.log('Socket connected');
+      });
+
+      socket.on('error', (error: string) => {
+        setError(`Transcription error: ${error}`);
+      });
+
+      socketRef.current = socket;
+    };
+
+    initSocket();
 
     socketRef.current.on('transcription', (data: { text: string; isFinal: boolean }) => {
       onTranscriptionUpdate(data.text, data.isFinal);

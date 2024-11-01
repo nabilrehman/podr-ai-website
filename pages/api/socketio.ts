@@ -1,27 +1,33 @@
 import { Server as NetServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
 import { NextApiRequest } from 'next';
 import { NextApiResponse } from 'next';
+import { Server as ServerIO } from 'socket.io';
 import speech from '@google-cloud/speech';
 
-export const dynamic = 'force-dynamic';
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const speechClient = new speech.SpeechClient();
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  if (!res.socket?.server?.io) {
+const ioHandler = (req: NextApiRequest, res: NextApiResponse) => {
+  if (!res.socket.server.io) {
+    const path = '/api/socketio';
+    console.log('New Socket.io server...');
     const httpServer: NetServer = res.socket.server as any;
-    const io = new SocketIOServer(httpServer, {
-      path: '/api/socketio',
+    const io = new ServerIO(httpServer, {
+      path: path,
       addTrailingSlash: false,
     });
 
     io.on('connection', (socket) => {
       console.log('Client connected');
-
       let recognizeStream: any = null;
 
       socket.on('startStream', () => {
+        console.log('Starting stream...');
         recognizeStream = speechClient
           .streamingRecognize({
             config: {
@@ -42,7 +48,6 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
             if (data.results[0] && data.results[0].alternatives[0]) {
               const transcription = data.results[0].alternatives[0].transcript;
               const isFinal = data.results[0].isFinal;
-
               socket.emit('transcription', {
                 text: transcription,
                 isFinal: isFinal
@@ -65,7 +70,6 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       });
 
       socket.on('disconnect', () => {
-        console.log('Client disconnected');
         if (recognizeStream) {
           recognizeStream.end();
           recognizeStream = null;
@@ -75,9 +79,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
     res.socket.server.io = io;
   }
-
   res.end();
-}
+};
 
-// Handle WebSocket upgrade
-export const OPTIONS = GET;
+export default ioHandler;
