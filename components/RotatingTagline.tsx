@@ -25,35 +25,47 @@ export default function RotatingTagline() {
     return (
         <div className="relative py-8">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 opacity-50" />
-            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-semibold text-center leading-tight flex items-center justify-center gap-3 flex-wrap">
-                <span className="text-gray-900">Free yourself from your</span>
-                <div className="relative inline-block w-[320px] h-[70px] overflow-hidden">
-                    <AnimatePresence mode="wait">
-                        <motion.span
-                            key={index}
-                            initial={{ y: 40, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -40, opacity: 0 }}
-                            transition={{
-                                y: { type: "spring", stiffness: 300, damping: 25 },
-                                opacity: { duration: 0.4 }
-                            }}
-                            className="absolute left-0 right-0 text-center inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 [text-shadow:0_4px_12px_rgba(251,146,60,0.3)]"
-                            style={{
-                                WebkitBackgroundClip: 'text',
-                                backgroundSize: '200% auto',
-                                animation: 'shine 3s linear infinite'
-                            }}
-                        >
-                            {phrases[index]}
-                        </motion.span>
-                    </AnimatePresence>
+            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-semibold text-center leading-tight">
+                <div className="inline-flex items-center justify-center whitespace-nowrap">
+                    <span className="text-gray-900 mr-3">Free yourself from your</span>
+                    <div className="relative inline-flex items-center bg-purple-50/30 rounded-xl px-6 py-2 min-w-[200px]">
+                        <AnimatePresence mode="wait">
+                            <motion.span
+                                key={index}
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -20, opacity: 0 }}
+                                transition={{
+                                    y: { type: "spring", stiffness: 400, damping: 25 },
+                                    opacity: { duration: 0.3 }
+                                }}
+                                className="absolute left-0 right-0 text-center inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 font-bold [text-shadow:0_2px_15px_rgba(251,146,60,0.5)]"
+                                style={{
+                                    WebkitBackgroundClip: 'text',
+                                    backgroundSize: '200% auto',
+                                    animation: 'shine 2.5s linear infinite',
+                                    filter: 'drop-shadow(0 0 2px rgba(251,146,60,0.3))'
+                                }}
+                            >
+                                {phrases[index]}
+                            </motion.span>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </h1>
             <style jsx global>{`
                 @keyframes shine {
-                    to {
+                    0% {
+                        background-position: 0% center;
+                        filter: brightness(1);
+                    }
+                    50% {
+                        background-position: 100% center;
+                        filter: brightness(1.2);
+                    }
+                    100% {
                         background-position: 200% center;
+                        filter: brightness(1);
                     }
                 }
             `}</style>
