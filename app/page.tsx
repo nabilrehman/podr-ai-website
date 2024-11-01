@@ -5,13 +5,13 @@ import RotatingTagline from '@/components/RotatingTagline';
 
 const coaches = [
   {
-    name: 'Dr. Emma AI',
-    specialty: 'Social Situations Specialist',
-    tags: ['Group Settings', 'Social Confidence'],
-    rating: '4.9',
-    satisfaction: '98.8% Success Rate',
-    description: 'Specialized in helping with social anxiety in group settings and building lasting confidence.',
-    imagePath: '/images/profiles/ai-coach-1.svg'
+    name: 'Julien Himself',
+    specialty: 'AI & Mental Health Specialist',
+    tags: ['AI Development', 'Mental Health Support'],
+    rating: '5.0',
+    satisfaction: '99.9% Success Rate',
+    description: 'Pioneering the intersection of AI and mental health support, helping individuals unlock their full potential.',
+    imagePath: '/public/julien.jpeg'
   },
   {
     name: 'Dr. Alex AI',
