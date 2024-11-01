@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import CoachCard from '@/components/CoachCard';
 import { CardSlider } from '@/components/CardSlider';
+import RotatingTagline from '@/components/RotatingTagline';
 
 const coaches = [
   {
@@ -37,9 +38,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       <section className="hero relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-center bg-white">
         <div className="max-w-3xl mx-auto space-y-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
-            Overcome Social Anxiety with AI Support
-          </h1>
+          <RotatingTagline />
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             24/7 empathetic conversations with AI psychologists and coaches trained in social anxiety management
           </p>
