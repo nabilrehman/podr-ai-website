@@ -18,30 +18,36 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscriptionUpdate }) 
   useEffect(() => {
     // Initialize socket connection
     const initSocket = async () => {
-      // Initialize socket server
-      await fetch('/api/socketio');
-      
-      // Connect to socket
-      const socket = io({
-        path: '/api/socketio',
-      });
+      try {
+        // Initialize socket server
+        await fetch('/api/socketio');
+        
+        // Connect to socket
+        const socket = io({
+          path: '/api/socketio',
+        });
 
-      socket.on('connect', () => {
-        console.log('Socket connected');
-      });
+        socket.on('connect', () => {
+          console.log('Socket connected');
+        });
 
-      socket.on('error', (error: string) => {
-        setError(`Transcription error: ${error}`);
-      });
+        socket.on('error', (error: string) => {
+          setError(`Transcription error: ${error}`);
+        });
 
-      socketRef.current = socket;
+        // Add transcription listener here after socket is initialized
+        socket.on('transcription', (data: { text: string; isFinal: boolean }) => {
+          onTranscriptionUpdate(data.text, data.isFinal);
+        });
+
+        socketRef.current = socket;
+      } catch (error) {
+        console.error('Socket initialization error:', error);
+        setError('Failed to initialize voice chat connection');
+      }
     };
 
     initSocket();
-
-    socketRef.current.on('transcription', (data: { text: string; isFinal: boolean }) => {
-      onTranscriptionUpdate(data.text, data.isFinal);
-    });
 
     return () => {
       if (socketRef.current) {
@@ -49,7 +55,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscriptionUpdate }) 
       }
       cleanup();
     };
-  }, []);
+  }, [onTranscriptionUpdate]);
 
   const cleanup = () => {
     if (processorNodeRef.current) {
