@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const phrases = [
-    "your limitations",
-    "your fears",
-    "your doubts"
+    "your limitations...",
+    "your fears...",
+    "your doubts..."
 ];
 
 export default function RotatingTagline() {
@@ -21,21 +21,27 @@ export default function RotatingTagline() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[200px] py-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center leading-tight">
-                <span className="block text-gray-800 mb-2">Free yourself from</span>
-                <div className="h-24 relative flex items-center justify-center overflow-hidden">
+        <div className="relative py-8">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 opacity-50" />
+            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-bold text-center leading-tight flex items-center justify-center gap-3 flex-nowrap whitespace-nowrap">
+                <span className="text-gray-800">Free yourself from</span>
+                <div className="relative inline-block w-[280px] h-[70px] overflow-hidden">
                     <AnimatePresence mode="wait">
                         <motion.span
                             key={index}
-                            initial={{ y: 50, opacity: 0 }}
+                            initial={{ y: 40, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -50, opacity: 0 }}
+                            exit={{ y: -40, opacity: 0 }}
                             transition={{
-                                y: { type: "spring", stiffness: 300, damping: 30 },
-                                opacity: { duration: 0.2 }
+                                y: { type: "spring", stiffness: 200, damping: 20 },
+                                opacity: { duration: 0.3 }
                             }}
-                            className="absolute text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 inline-flex items-center"
+                            className="absolute left-0 inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 [text-shadow:0_4px_8px_rgba(251,146,60,0.2)]"
+                            style={{
+                                WebkitBackgroundClip: 'text',
+                                backgroundSize: '200% auto',
+                                animation: 'shine 2s linear infinite'
+                            }}
                         >
                             {phrases[index]}
                             <motion.span
@@ -43,16 +49,23 @@ export default function RotatingTagline() {
                                 animate={{ scale: 1 }}
                                 transition={{
                                     type: "spring",
-                                    stiffness: 300,
-                                    damping: 20,
-                                    delay: 0.2
+                                    stiffness: 400,
+                                    damping: 25,
+                                    delay: 0.1
                                 }}
-                                className="absolute -right-4 -top-2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-75"
+                                className="absolute -right-2 -top-1 w-3 h-3 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 opacity-80 blur-[2px]"
                             />
                         </motion.span>
                     </AnimatePresence>
                 </div>
             </h1>
+            <style jsx global>{`
+                @keyframes shine {
+                    to {
+                        background-position: 200% center;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

@@ -36,8 +36,8 @@ const coaches = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-purple-50">
-      <section className="hero relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-center bg-white">
-        <div className="max-w-3xl mx-auto space-y-6">
+      <section className="hero relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-center bg-gradient-to-br from-orange-50 to-orange-100/30">
+        <div className="max-w-6xl mx-auto space-y-6">
           <RotatingTagline />
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             24/7 empathetic conversations with AI psychologists and coaches trained in social anxiety management
